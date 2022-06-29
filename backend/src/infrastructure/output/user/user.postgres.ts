@@ -15,5 +15,8 @@ export const userRepositoryPostgres = (): UserRepository => {
     const users: User[] = await userRepository.find();
     return users;
   };
-  return { getAll, create };
+  const getOne = async (id: string): Promise<User | undefined> => {
+    return (await userRepository.findOne({ where: { id } })) || undefined;
+  };
+  return { getAll, create, getOne };
 };

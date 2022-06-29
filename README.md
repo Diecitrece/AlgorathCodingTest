@@ -1,3 +1,5 @@
+# Coding test approach
+
 ## Problem
 
 We have a number of users that we need to keep track of, we also wish to keep track
@@ -23,3 +25,7 @@ A user is defined by 2 pieces of information, an id and a name.
 Please provide your solution in a compressed file.
 Create a project available through a public repository (e.g. git) that we can access (we
 would like to be able to see how your solution progresses).
+
+# Deployment instructions
+
+Coming soon...
