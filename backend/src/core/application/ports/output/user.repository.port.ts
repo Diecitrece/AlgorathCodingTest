@@ -1,5 +1,5 @@
 import { User } from '@domain/user.model';
-export interface UserCRUD {
+export interface UserRepository {
   // create: (user: User) => Promise<User | undefined>;
   getAll: () => Promise<User[]>;
   // getOne: (id: string) => Promise<User | undefined>;

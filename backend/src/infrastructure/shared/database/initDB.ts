@@ -1,5 +1,6 @@
 import reflectMetadata from 'reflect-metadata';
 import { DataSource } from 'typeorm';
+
 export const initDB = (dataSource: DataSource) => {
   dataSource
     .initialize()
