@@ -13,8 +13,5 @@ export const user_useCases = (): UserCRUD => {
   const getAll = async (): Promise<User[]> => {
     return userRepository.getAll();
   };
-  const getOne = async (id: string): Promise<User | undefined> => {
-    return userRepository.getOne(id);
-  };
-  return { getAll, create, getOne };
+  return { getAll, create };
 };
