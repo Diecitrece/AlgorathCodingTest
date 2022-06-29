@@ -1,6 +1,6 @@
 import { User } from '@domain/user.model';
 export interface UserRepository {
-  // create: (user: User) => Promise<User | undefined>;
+  create: (name: string) => Promise<User | undefined>;
   getAll: () => Promise<User[]>;
   // getOne: (id: string) => Promise<User | undefined>;
   // connect: (idUser: string, idConnectedUser: string) => Promise<boolean>;

@@ -7,8 +7,11 @@ export const user_useCases = (): UserCRUD => {
   const userRepository: UserRepository =
     dependenciesContainer.cradle.userRepository();
 
+  const create = async (name: string): Promise<User | undefined> => {
+    return userRepository.create(name);
+  };
   const getAll = async (): Promise<User[]> => {
     return userRepository.getAll();
   };
-  return { getAll };
+  return { getAll, create };
 };
