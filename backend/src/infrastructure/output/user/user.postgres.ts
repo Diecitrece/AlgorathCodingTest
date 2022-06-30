@@ -1,4 +1,4 @@
-import { User } from '@domain/user.model';
+import { ConnectedUser, User } from '@domain/user.model';
 import postgresDatasource from '@shared/database/postgres.datasource';
 import UserModel from '@shared/database/user/user.model';
 import { UserRepository } from '@ports/output/user.repository.port';
@@ -69,5 +69,19 @@ export const userRepositoryPostgres = (): UserRepository => {
     );
     return connections;
   };
-  return { getAll, create, getOne, connect, getConnected };
+  const getAllConnections = async (): Promise<ConnectedUser[]> => {
+    const allUsers: User[] = await getAll();
+    const connections: ConnectedUser[] = await Promise.all(
+      allUsers.map(async (user: User) => {
+        return {
+          id: user.id,
+          name: user.name,
+          connections: (await getConnected(user.id)) || [],
+        };
+      })
+    );
+    console.log(connections);
+    return connections;
+  };
+  return { getAll, create, getOne, connect, getConnected, getAllConnections };
 };

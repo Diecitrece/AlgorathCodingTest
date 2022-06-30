@@ -1,9 +1,6 @@
 import { EntitySchema } from 'typeorm';
-import { User } from '@domain/user.model';
+import { ConnectedUser } from '@domain/user.model';
 
-interface ConnectedUser extends User {
-  connections: User[];
-}
 const UserModel = new EntitySchema<ConnectedUser>({
   name: 'User',
   tableName: 'users',

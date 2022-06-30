@@ -9,30 +9,6 @@ const user_useCases: UserCRUD = dependenciesContainer.cradle.user_useCases();
 export const userRouter = Router();
 userRouter.use(bodyParser.json());
 
-userRouter.get(
-  '/api/users',
-  async (req: Request, res: Response): Promise<void> => {
-    const users = await user_useCases.getAll();
-    res.status(200).json(users);
-  }
-);
-userRouter.get(
-  '/api/users/:id',
-  async (req: Request, res: Response): Promise<void> => {
-    if (typeof req.params.id !== 'string') {
-      res.status(400).send('Invalid ID');
-      return;
-    }
-    const id: string = req.params.id;
-    const user = await user_useCases.getOne(id);
-    if (user) {
-      res.status(200).json(user);
-      return;
-    }
-    res.status(404).send('User not found');
-    return;
-  }
-);
 userRouter.post(
   '/api/users',
   async (req: Request, res: Response): Promise<void> => {
@@ -76,6 +52,21 @@ userRouter.post(
   }
 );
 userRouter.get(
+  '/api/users',
+  async (req: Request, res: Response): Promise<void> => {
+    const users = await user_useCases.getAll();
+    res.status(200).json(users);
+  }
+);
+userRouter.get(
+  '/api/users/connections',
+  async (req: Request, res: Response): Promise<void> => {
+    const connections = await user_useCases.getAllConnections();
+    res.status(200).json(connections);
+    return;
+  }
+);
+userRouter.get(
   '/api/users/connections/:id',
   async (req: Request, res: Response): Promise<void> => {
     if (typeof req.params.id !== 'string') {
@@ -86,6 +77,23 @@ userRouter.get(
     const users = await user_useCases.getConnected(id);
     if (users) {
       res.status(200).json(users);
+      return;
+    }
+    res.status(404).send('User not found');
+    return;
+  }
+);
+userRouter.get(
+  '/api/users/:id',
+  async (req: Request, res: Response): Promise<void> => {
+    if (typeof req.params.id !== 'string') {
+      res.status(400).send('Invalid ID');
+      return;
+    }
+    const id: string = req.params.id;
+    const user = await user_useCases.getOne(id);
+    if (user) {
+      res.status(200).json(user);
       return;
     }
     res.status(404).send('User not found');
