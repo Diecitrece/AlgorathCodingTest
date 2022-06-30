@@ -23,5 +23,8 @@ export const user_useCases = (): UserCRUD => {
   ): Promise<boolean | undefined> => {
     return userRepository.connect(idUser1, idUser2);
   };
-  return { getAll, create, getOne, connect };
+  const getConnected = async (id: string): Promise<User[] | undefined> => {
+    return userRepository.getConnected(id);
+  };
+  return { getAll, create, getOne, connect, getConnected };
 };

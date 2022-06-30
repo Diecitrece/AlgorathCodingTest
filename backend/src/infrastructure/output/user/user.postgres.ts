@@ -2,7 +2,6 @@ import { User } from '@domain/user.model';
 import postgresDatasource from '@shared/database/postgres.datasource';
 import UserModel from '@shared/database/user/user.model';
 import { UserRepository } from '@ports/output/user.repository.port';
-import { query } from 'express';
 
 export const userRepositoryPostgres = (): UserRepository => {
   const userRepository = postgresDatasource.getRepository(UserModel);
@@ -34,7 +33,10 @@ export const userRepositoryPostgres = (): UserRepository => {
       .from('users_connections_users', 'connection')
       .where('"usersId_1" = :idUser1', { idUser1 })
       .andWhere('"usersId_2" = :idUser2', { idUser2 })
+      .orWhere('"usersId_2" = :idUser1', { idUser1 })
+      .andWhere('"usersId_1" = :idUser2', { idUser2 })
       .getCount();
+
     if (alreadyConnected != 0) {
       await postgresDatasource
         .createQueryBuilder()
@@ -42,6 +44,8 @@ export const userRepositoryPostgres = (): UserRepository => {
         .from('users_connections_users')
         .where('"usersId_1" = :idUser1', { idUser1 })
         .andWhere('"usersId_2" = :idUser2', { idUser2 })
+        .orWhere('"usersId_2" = :idUser1', { idUser1 })
+        .andWhere('"usersId_1" = :idUser2', { idUser2 })
         .execute();
       return false;
     }
@@ -53,5 +57,17 @@ export const userRepositoryPostgres = (): UserRepository => {
       .execute();
     return true;
   };
-  return { getAll, create, getOne, connect };
+  const getConnected = async (id: string): Promise<User[] | undefined> => {
+    const exists = await userRepository.findOne({ where: { id } });
+    if (!exists) {
+      return undefined;
+    }
+    const connections = await postgresDatasource.query(
+      `SELECT DISTINCT users.id, users.name from users_connections_users as connections 
+      INNER JOIN users ON users.id = connections."usersId_1" OR users.id = connections."usersId_2" 
+      WHERE (connections."usersId_1" = '${id}' OR connections."usersId_2" = '${id}') AND users.id != '${id}'`
+    );
+    return connections;
+  };
+  return { getAll, create, getOne, connect, getConnected };
 };

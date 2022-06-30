@@ -3,7 +3,6 @@ import UserModel from './user/user.model';
 import dotenv from 'dotenv';
 dotenv.config();
 
-console.log(process.env.DATABASE_USERNAME);
 export default new DataSource({
   type: 'postgres',
   host: 'localhost',

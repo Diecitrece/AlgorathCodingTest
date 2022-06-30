@@ -4,6 +4,6 @@ export interface UserRepository {
   getAll: () => Promise<User[]>;
   getOne: (id: string) => Promise<User | undefined>;
   connect: (idUser1: string, idUser2: string) => Promise<boolean | undefined>;
-  // getConnected: (id: string) => Promise<User[]>;
+  getConnected: (id: string) => Promise<User[] | undefined>;
   // getAllConnections: () => Promise<User[]>; //THIS HAS TO BE RECONSIDERED YET
 }

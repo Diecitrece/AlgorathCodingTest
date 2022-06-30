@@ -75,3 +75,20 @@ userRouter.post(
     res.status(400).send('Any of the given users does not exist');
   }
 );
+userRouter.get(
+  '/api/users/connections/:id',
+  async (req: Request, res: Response): Promise<void> => {
+    if (typeof req.params.id !== 'string') {
+      res.status(400).send('Invalid ID');
+      return;
+    }
+    const id: string = req.params.id;
+    const users = await user_useCases.getConnected(id);
+    if (users) {
+      res.status(200).json(users);
+      return;
+    }
+    res.status(404).send('User not found');
+    return;
+  }
+);
