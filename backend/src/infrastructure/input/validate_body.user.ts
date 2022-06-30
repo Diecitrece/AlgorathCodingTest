@@ -1,6 +1,6 @@
 import Joi, { ObjectSchema } from 'joi';
 
-export const schemaUserRegister: ObjectSchema = Joi.object({
+export const schemaCreateUser: ObjectSchema = Joi.object({
   name: Joi.string()
     .min(3)
     .max(30)

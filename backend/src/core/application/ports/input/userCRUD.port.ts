@@ -3,7 +3,7 @@ export interface UserCRUD {
   create: (name: string) => Promise<User | undefined>;
   getAll: () => Promise<User[]>;
   getOne: (id: string) => Promise<User | undefined>;
-  // connect: (idUser: string, idConnectedUser: string) => Promise<boolean>;
+  connect: (idUser1: string, idUser2: string) => Promise<boolean | undefined>;
   // getConnected: (id: string) => Promise<User[]>;
   // getAllConnections: () => Promise<User[]>; //THIS HAS TO BE RECONSIDERED YET
 }

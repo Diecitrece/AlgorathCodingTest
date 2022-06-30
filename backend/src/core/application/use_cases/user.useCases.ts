@@ -2,6 +2,7 @@ import { User } from '@domain/user.model';
 import { UserCRUD } from '@ports/input/userCRUD.port';
 import { UserRepository } from '@ports/output/user.repository.port';
 import { dependenciesContainer } from '@shared/dependency_injection';
+import { BooleanLiteral } from 'typescript';
 
 export const user_useCases = (): UserCRUD => {
   const userRepository: UserRepository =
@@ -16,5 +17,11 @@ export const user_useCases = (): UserCRUD => {
   const getOne = async (id: string): Promise<User | undefined> => {
     return userRepository.getOne(id);
   };
-  return { getAll, create, getOne };
+  const connect = async (
+    idUser1: string,
+    idUser2: string
+  ): Promise<boolean | undefined> => {
+    return userRepository.connect(idUser1, idUser2);
+  };
+  return { getAll, create, getOne, connect };
 };

@@ -3,7 +3,7 @@ import { User } from '@domain/user.model';
 import bodyParser from 'body-parser';
 import { dependenciesContainer } from '@shared/dependency_injection';
 import { UserCRUD } from '@ports/input/userCRUD.port';
-import { schemaUserRegister } from './validate_body.user';
+import { schemaCreateUser } from './validate_body.user';
 const user_useCases: UserCRUD = dependenciesContainer.cradle.user_useCases();
 
 export const userRouter = Router();
@@ -36,7 +36,7 @@ userRouter.get(
 userRouter.post(
   '/api/users',
   async (req: Request, res: Response): Promise<void> => {
-    const validation = schemaUserRegister.validate(req.body);
+    const validation = schemaCreateUser.validate(req.body);
     if (validation.error) {
       res.status(400).send(validation.error?.details[0].message);
       return;
@@ -49,5 +49,29 @@ userRouter.post(
     }
     res.status(400).send('User already exists');
     return;
+  }
+);
+userRouter.post(
+  '/api/users/connect',
+  async (req: Request, res: Response): Promise<void> => {
+    const { id1, id2 } = req.body;
+    if (!id1 || !id2) {
+      res.status(400).send('id1 and/or id2 missing');
+      return;
+    }
+    if (id1 === id2) {
+      res.status(400).send('id1 and id2 can not be equal');
+      return;
+    }
+    const newConnection = await user_useCases.connect(id1, id2);
+    if (newConnection) {
+      res.status(201).send('Connection stablished');
+      return;
+    }
+    if (newConnection === false) {
+      res.status(201).send('Users disconnected');
+      return;
+    }
+    res.status(400).send('Any of the given users does not exist');
   }
 );
