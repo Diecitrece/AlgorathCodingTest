@@ -1,6 +1,6 @@
 import { createContainer, asValue } from 'awilix';
-import { user_useCases } from 'core/application/use_cases/user.useCases';
-import { userRepositoryPostgres } from 'infrastructure/output/user/user.postgres';
+import { user_useCases } from '@use_cases/user.useCases';
+import { userRepositoryPostgres } from '@output_infrastructure/user/user.postgres';
 
 export const dependenciesContainer = createContainer();
 

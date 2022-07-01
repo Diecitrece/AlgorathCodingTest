@@ -1,5 +1,4 @@
 import { Request, Response, Router } from 'express';
-import { User } from '@domain/user.model';
 import bodyParser from 'body-parser';
 import { dependenciesContainer } from '@shared/dependency_injection';
 import { UserCRUD } from '@ports/input/userCRUD.port';
