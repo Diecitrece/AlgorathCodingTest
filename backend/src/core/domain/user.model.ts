@@ -2,3 +2,7 @@ export interface User {
   id: string;
   name: string;
 }
+
+export interface ConnectedUser extends User {
+  connections: User[];
+}
