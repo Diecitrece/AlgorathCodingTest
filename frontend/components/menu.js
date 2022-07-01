@@ -3,17 +3,21 @@ import { useRouter } from 'next/router';
 
 export default function Menu() {
   const router = useRouter();
-
   return (
     <div className={styles.menu}>
-      <div className={router.pathname == '/connect' ? styles.button_there : ''}>
-        Create a connection
-      </div>
-      <div className={router.pathname == '/' ? styles.button_there : ''}>
+      <div
+        className={router.pathname == '/' ? styles.button_there : ''}
+        onClick={(e) => {
+          router.push('/');
+        }}
+      >
         Home
       </div>
       <div
         className={router.pathname == '/registry' ? styles.button_there : ''}
+        onClick={(e) => {
+          router.push('/registry');
+        }}
       >
         Connection registry
       </div>

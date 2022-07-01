@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import Menu from '../components/menu.js';
+import '@fortawesome/fontawesome-free/css/all.css';
 
 function MyApp({ Component, pageProps }) {
   return (
