@@ -9,7 +9,7 @@ export default function Home() {
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
   const loadData = () => {
-    let url = `${process.env.NEXT_PUBLIC_API_ROUTE}/api/users`;
+    let url = `${process.env.NEXT_PUBLICAPI_ROUTE}/api/users`;
     const response = fetch(url, {
       method: 'GET',
     })
