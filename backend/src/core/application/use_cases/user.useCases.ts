@@ -2,7 +2,6 @@ import { ConnectedUser, User } from '@domain/user.model';
 import { UserCRUD } from '@ports/input/userCRUD.port';
 import { UserRepository } from '@ports/output/user.repository.port';
 import { dependenciesContainer } from '@shared/dependency_injection';
-import { BooleanLiteral } from 'typescript';
 
 export const user_useCases = (): UserCRUD => {
   const userRepository: UserRepository =
